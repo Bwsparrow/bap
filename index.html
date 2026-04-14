@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ben Weber-Sparrow - BAP Director of Tech</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-brand">Ben Weber-Sparrow</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#vision">The Vision</a></li>
+            <li><a href="#audit">The Audit</a></li>
+            <li><a href="#game">The Game</a></li>
+        </ul>
+    </nav>
+
+    <!-- SECTION 1: HOME -->
+    <section id="home" class="hero-section">
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">Ben Weber-Sparrow</h1>
+            <h2 class="hero-subtitle">Candidate for Director of Technology | Beta Alpha Psi</h2>
+            <div class="tagline">"Debits on the left, Credits on the right, and Innovation at the center."</div>
+            <a href="#vision" class="cta-button">View the Roadmap</a>
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE VISION -->
+    <section id="vision" class="content-section">
+        <div class="container fade-in">
+            <h2 class="section-title">The Strategic Roadmap</h2>
+            <p class="section-intro">Bridging the gap between financial excellence and technological efficiency.</p>
+            
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon">⏱️</div>
+                    <div class="pillar-title">Automated Hour Tracking</div>
+                    <div class="pillar-desc">
+                        Transition from manual spreadsheet entry to a custom SQL-backed web portal. Real-time updates for members to check their candidacy status.
+                    </div>
+                    <span class="roi-badge">EST. SAVINGS: 12 Hours/Month</span>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon">💼</div>
+                    <div class="pillar-title">The Recruiter Gateway</div>
+                    <div class="pillar-desc">
+                        An SEO-optimized "Resume Book" portal accessible to our firm sponsors via secure login. Making it easier for Big 4 and mid-tier firms to find our talent.
+                    </div>
+                    <span class="roi-badge">GOAL: 20% Increase in Interviews</span>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="pillar-card">
+                    <div class="pillar-icon">🔒</div>
+                    <div class="pillar-title">Cyber-Audit & Security</div>
+                    <div class="pillar-desc">
+                        Implementing a chapter-wide Password Manager and 2FA for all executive accounts to protect sensitive candidate data and treasury records.
+                    </div>
+                    <span class="roi-badge">STATUS: Critical Risk Mitigation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: THE AUDIT -->
+    <section id="audit" class="content-section bg-light">
+        <div class="container fade-in">
+            <h2 class="section-title">Internal Audit: Candidate Profile</h2>
+            <p class="section-intro">A breakdown of my technical and professional assets.</p>
+            
+            <div class="audit-grid">
+                <div class="audit-cell hover-effect">
+                    <div class="cell-header">Current Assets (Tech Stack)</div>
+                    <ul class="tech-stack">
+                        <li>Python</li>
+                        <li>SQL</li>
+                        <li>VBA / Macros</li>
+                        <li>HTML/CSS</li>
+                        <li>PowerBI</li>
+                        <li>Advanced Excel</li>
+                        <li>React</li>
+                    </ul>
+                </div>
+                <div class="audit-cell hover-effect">
+                    <div class="cell-header">Operating Experience</div>
+                    <ul class="experience-list">
+                        <li>Built a personal finance tracker using React.</li>
+                        <li>Developed automated templates for accounting coursework using VBA.</li>
+                        <li>Voted "Most Likely to Fix the Printer."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="summary-box hover-effect">
+                <h3>Summary of Qualifications</h3>
+                <p>I don't just know how to code; I know <em>why</em> we need it. As accounting professionals, our time is our most valuable asset. My goal is to maximize our "Return on Tech" so we can focus on building relationships and passing the CPA.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SECTION 4: THE ACCOUNTING GAME -->
+    <section id="game" class="content-section">
+        <div class="container fade-in text-center">
+            <h2 class="section-title">Month-End Close: The Game</h2>
+            <p class="section-intro">Prove you have what it takes to balance the books! Sort the transactions before they hit the floor.<br><strong>Debits (DR) on the Left. Credits (CR) on the Right.</strong></p>
+            
+            <div id="game-container">
+                <div id="score-board">Retained Earnings (Score): <span id="score">0</span></div>
+                <div id="game-board">
+                    <div id="accountant">🧑‍💼</div>
+                </div>
+                <div class="game-controls">
+                    <button id="btn-left" class="game-btn debit-btn">⬅️ DR (Left Arrow)</button>
+                    <button id="btn-start" class="game-btn start-btn">Start Month-End</button>
+                    <button id="btn-right" class="game-btn credit-btn">(Right Arrow) CR ➡️</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer-cta">
+        <div class="footer-content fade-in">
+            <h2>Let’s Debug the Future Together.</h2>
+            <p>Vote Ben Weber-Sparrow for Director of Technology</p>
+            <button class="interactive-btn" onclick="alert('Thank you for auditing my campaign! I look forward to earning your vote.')">Endorse Ben</button>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for scroll animations (fade-in effect)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // --- THE ACCOUNTING GAME LOGIC ---
+        let score = 0;
+        let isPlaying = false;
+        let gameLoop;
+        let spawnInterval;
+        let items = [];
+        let speedMultiplier = 1;
+        
+        const gameBoard = document.getElementById('game-board');
+        const scoreEl = document.getElementById('score');
+        const btnStart = document.getElementById('btn-start');
+
+        function startGame() {
+            if(isPlaying) return;
+            isPlaying = true;
+            score = 0;
+            speedMultiplier = 1;
+            scoreEl.innerText = score;
+            btnStart.innerText = "Closing the Books...";
+            btnStart.disabled = true;
+            
+            // Clear board except for accountant
+            gameBoard.innerHTML = '<div id="accountant">🧑‍💼</div>'; 
+            items = [];
+            
+            spawnInterval = setInterval(spawnItem, 1200);
+            requestAnimationFrame(updateGame);
+            
+            // Increase difficulty over time
+            setTimeout(() => { speedMultiplier = 1.5; }, 15000);
+            setTimeout(() => { speedMultiplier = 2.0; }, 30000);
+            
+            // End game after 45 seconds
+            setTimeout(endGame, 45000);
+        }
+
+        function endGame() {
+            isPlaying = false;
+            clearInterval(spawnInterval);
+            btnStart.innerText = "Start Next Month";
+            btnStart.disabled = false;
+            alert("Month-End Close Complete! Your final Retained Earnings (Score) is: " + score + ". " + (score > 50 ? "Partner material!" : "Back to intermediate accounting with you."));
+        }
+
+        function spawnItem() {
+            if(!isPlaying) return;
+            const isDebit = Math.random() > 0.5;
+            const item = document.createElement('div');
+            item.className = 'falling-item ' + (isDebit ? 'debit-item' : 'credit-item');
+            item.innerText = isDebit ? 'DR' : 'CR';
+            item.dataset.type = isDebit ? 'debit' : 'credit';
+            item.style.top = '0px';
+            
+            // Random horizontal position, keeping it within bounds
+            const maxLeft = gameBoard.offsetWidth - 50; 
+            item.style.left = Math.floor(Math.random() * maxLeft) + 'px';
+            
+            gameBoard.appendChild(item);
+            items.push({ el: item, y: 0, x: parseFloat(item.style.left) });
+        }
+
+        function updateGame() {
+            if(!isPlaying) return;
+            for(let i=0; i<items.length; i++) {
+                items[i].y += (2.5 * speedMultiplier); // fall speed
+                items[i].el.style.top = items[i].y + 'px';
+
+                // check if hits the floor (missed transaction)
+                if(items[i].y > gameBoard.offsetHeight - 40) {
+                    gameBoard.removeChild(items[i].el);
+                    items.splice(i, 1);
+                    i--;
+                    score = Math.max(0, score - 5); // penalty for unrecorded transaction
+                    scoreEl.innerText = score;
+                    flashBoard('red');
+                }
+            }
+            requestAnimationFrame(updateGame);
+        }
+
+        function handleInput(type) {
+            if(!isPlaying || items.length === 0) return;
+            
+            // Find the lowest item on the screen (closest to the floor)
+            let lowest = items.reduce((prev, curr) => (prev.y > curr.y) ? prev : curr);
+            
+            // Only allow hitting if it's falling (prevent hitting ones that just spawned)
+            if (lowest.y > 30) {
+                if(lowest.el.dataset.type === type) {
+                    score += 10; // correct entry
+                    flashBoard('green');
+                } else {
+                    score = Math.max(0, score - 5); // wrong entry
+                    flashBoard('red');
+                }
+                scoreEl.innerText = score;
+                gameBoard.removeChild(lowest.el);
+                items = items.filter(i => i !== lowest);
+            }
+        }
+        
+        function flashBoard(color) {
+            gameBoard.style.boxShadow = `inset 0 0 20px ${color}`;
+            setTimeout(() => {
+                gameBoard.style.boxShadow = 'inset 0 0 10px rgba(0,0,0,0.5)';
+            }, 150);
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowLeft') handleInput('debit');
+            if(e.key === 'ArrowRight') handleInput('credit');
+        });
+        
+        // Button controls for mobile/mouse
+        document.getElementById('btn-left').addEventListener('click', () => handleInput('debit'));
+        document.getElementById('btn-right').addEventListener('click', () => handleInput('credit'));
+        document.getElementById('btn-start').addEventListener('click', startGame);
+    </script>
+</body>
+</html>
