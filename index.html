@@ -11,11 +11,13 @@
     <!-- NAVIGATION BAR -->
     <nav class="navbar">
         <div class="nav-brand">Ben Weber-Sparrow</div>
-        <ul class="nav-links">
+        <div class="hamburger" id="hamburger">&#9776;</div>
+        <ul class="nav-links" id="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#vision">The Vision</a></li>
             <li><a href="#audit">The Audit</a></li>
-            <li><a href="#game">The Game</a></li>
+            <li><a href="gateway.html">The Gateway</a></li>
+            <li><a href="game.html">The Game</a></li>
         </ul>
     </nav>
 
@@ -45,7 +47,7 @@
                     <span class="roi-badge">EST. SAVINGS: 12 Hours/Month</span>
                 </div>
 
-                <div class="pillar-card">
+                <div class="pillar-card clickable-card" onclick="window.location.href='gateway.html'">
                     <div class="pillar-icon">💼</div>
                     <div class="pillar-title">The Recruiter Gateway</div>
                     <div class="pillar-desc">
@@ -102,26 +104,6 @@
         </div>
     </section>
     
-    <!-- SECTION 4: THE ACCOUNTING GAME -->
-    <section id="game" class="content-section">
-        <div class="container fade-in text-center">
-            <h2 class="section-title">Normal Balances: The Game</h2>
-            <p class="section-intro">Sort the falling accounts to the side that <strong>INCREASES</strong> their balance.<br><strong>DEALER Rule:</strong> Dividends, Expenses, Assets (DR Left) | Liabilities, Equity, Revenue (CR Right)</p>
-            
-            <div id="game-container">
-                <div id="score-board">Retained Earnings (Score): <span id="score">0</span></div>
-                <div id="game-board">
-                    <div id="accountant">🧑‍💼</div>
-                </div>
-                <div class="game-controls">
-                    <button id="btn-left" class="game-btn debit-btn">⬅️ Debit (Left)</button>
-                    <button id="btn-start" class="game-btn start-btn">Start Month-End</button>
-                    <button id="btn-right" class="game-btn credit-btn">Credit (Right) ➡️</button>
-                </div>
-            </div>
-        </div>
-    </section>
-    
     <!-- FOOTER -->
     <footer class="footer-cta">
         <div class="footer-content fade-in">
@@ -133,17 +115,33 @@
 
     <!-- INTERACTIVE JAVASCRIPT -->
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Hamburger Menu Logic
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link (mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
             });
         });
 
-        // Intersection Observer
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -155,139 +153,6 @@
         }, observerOptions);
 
         document.querySelectorAll('.fade-in').forEach(element => { observer.observe(element); });
-        
-        // --- THE ACCOUNTING GAME LOGIC ---
-        let score = 0;
-        let isPlaying = false;
-        let gameLoop;
-        let spawnInterval;
-        let items = [];
-        let speedMultiplier = 1;
-        
-        const gameBoard = document.getElementById('game-board');
-        const scoreEl = document.getElementById('score');
-        const btnStart = document.getElementById('btn-start');
-
-        // Normal Balances Dictionary
-        const accountsList = [
-            // DEBITS (Increase on left)
-            { name: "Cash", type: "debit" },
-            { name: "Accounts Receivable", type: "debit" },
-            { name: "Inventory", type: "debit" },
-            { name: "Equipment", type: "debit" },
-            { name: "Rent Expense", type: "debit" },
-            { name: "COGS", type: "debit" },
-            { name: "Dividends", type: "debit" },
-            // CREDITS (Increase on right)
-            { name: "Accounts Payable", type: "credit" },
-            { name: "Notes Payable", type: "credit" },
-            { name: "Unearned Revenue", type: "credit" },
-            { name: "Common Stock", type: "credit" },
-            { name: "Retained Earnings", type: "credit" },
-            { name: "Sales Revenue", type: "credit" },
-            { name: "Accumulated Depr.", type: "credit" }
-        ];
-
-        function startGame() {
-            if(isPlaying) return;
-            isPlaying = true;
-            score = 0;
-            speedMultiplier = 1;
-            scoreEl.innerText = score;
-            btnStart.innerText = "Reconciling...";
-            btnStart.disabled = true;
-            
-            gameBoard.innerHTML = '<div id="accountant">🧑‍💼</div>'; 
-            items = [];
-            
-            spawnInterval = setInterval(spawnItem, 1400);
-            requestAnimationFrame(updateGame);
-            
-            setTimeout(() => { speedMultiplier = 1.4; }, 15000);
-            setTimeout(() => { speedMultiplier = 1.8; }, 30000);
-            
-            setTimeout(endGame, 45000);
-        }
-
-        function endGame() {
-            isPlaying = false;
-            clearInterval(spawnInterval);
-            btnStart.innerText = "Start Next Month";
-            btnStart.disabled = false;
-            alert("Month-End Close Complete! Your final score is: " + score + ". " + (score > 80 ? "CPA material right here!" : "Let's review those normal balances."));
-        }
-
-        function spawnItem() {
-            if(!isPlaying) return;
-            const account = accountsList[Math.floor(Math.random() * accountsList.length)];
-            const item = document.createElement('div');
-            item.className = 'falling-item';
-            item.innerText = account.name;
-            item.dataset.type = account.type;
-            item.style.top = '0px';
-            
-            gameBoard.appendChild(item);
-            
-            // Random horizontal position (keep within bounds based on text width)
-            const itemWidth = item.offsetWidth || 120;
-            const maxLeft = gameBoard.offsetWidth - itemWidth - 10; 
-            item.style.left = Math.floor(Math.random() * maxLeft) + 'px';
-            
-            items.push({ el: item, y: 0, x: parseFloat(item.style.left) });
-        }
-
-        function updateGame() {
-            if(!isPlaying) return;
-            for(let i=0; i<items.length; i++) {
-                items[i].y += (2.2 * speedMultiplier); 
-                items[i].el.style.top = items[i].y + 'px';
-
-                if(items[i].y > gameBoard.offsetHeight - 40) {
-                    gameBoard.removeChild(items[i].el);
-                    items.splice(i, 1);
-                    i--;
-                    score = Math.max(0, score - 5); 
-                    scoreEl.innerText = score;
-                    flashBoard('red');
-                }
-            }
-            requestAnimationFrame(updateGame);
-        }
-
-        function handleInput(type) {
-            if(!isPlaying || items.length === 0) return;
-            
-            let lowest = items.reduce((prev, curr) => (prev.y > curr.y) ? prev : curr);
-            
-            if (lowest.y > 20) {
-                if(lowest.el.dataset.type === type) {
-                    score += 10; 
-                    flashBoard('green');
-                } else {
-                    score = Math.max(0, score - 10); // Harsher penalty for wrong side!
-                    flashBoard('red');
-                }
-                scoreEl.innerText = score;
-                gameBoard.removeChild(lowest.el);
-                items = items.filter(i => i !== lowest);
-            }
-        }
-        
-        function flashBoard(color) {
-            gameBoard.style.boxShadow = `inset 0 0 30px ${color}`;
-            setTimeout(() => {
-                gameBoard.style.boxShadow = 'inset 0 0 10px rgba(0,0,0,0.5)';
-            }, 150);
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if(e.key === 'ArrowLeft') handleInput('debit');
-            if(e.key === 'ArrowRight') handleInput('credit');
-        });
-        
-        document.getElementById('btn-left').addEventListener('click', () => handleInput('debit'));
-        document.getElementById('btn-right').addEventListener('click', () => handleInput('credit'));
-        document.getElementById('btn-start').addEventListener('click', startGame);
     </script>
 </body>
 </html>

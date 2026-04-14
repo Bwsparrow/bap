@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Gateway Mockup - Ben Weber-Sparrow</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-brand">Ben Weber-Sparrow</div>
+        <div class="hamburger" id="hamburger">&#9776;</div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#vision">The Vision</a></li>
+            <li><a href="index.html#audit">The Audit</a></li>
+            <li><a href="gateway.html" style="color: #00509e;">The Gateway</a></li>
+            <li><a href="game.html">The Game</a></li>
+        </ul>
+    </nav>
+
+    <!-- SECTION: THE GATEWAY DASHBOARD -->
+    <section id="gateway" class="content-section" style="padding-top: 120px; min-height: calc(100vh - 200px); align-items: flex-start;">
+        <div class="container fade-in">
+            <div class="dashboard-header">
+                <div>
+                    <h2 class="section-title" style="margin-bottom: 5px;">Recruiter Gateway <span class="mockup-badge">BETA / MOCKUP</span></h2>
+                    <p class="section-intro" style="margin-bottom: 20px;">Exclusive access to the Delta Sigma Chapter's top talent. Designed to streamline firm recruiting.</p>
+                </div>
+                <div class="firm-profile">
+                    <div class="firm-avatar">💼</div>
+                    <span>Welcome, Recruiter Partner</span>
+                </div>
+            </div>
+            
+            <!-- Dashboard Toolbar -->
+            <div class="dashboard-toolbar">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search by name, major, or skills..." disabled>
+                </div>
+                <div class="filters">
+                    <select disabled><option>Grad Year: All</option><option>2026</option><option>2027</option></select>
+                    <select disabled><option>Interest: All</option><option>Audit</option><option>Tax</option><option>Advisory</option></select>
+                    <select disabled><option>CPA Eligible: Yes</option></select>
+                </div>
+            </div>
+
+            <!-- Candidate Grid -->
+            <div class="candidate-grid">
+                <!-- Candidate 1 -->
+                <div class="candidate-card hover-effect">
+                    <div class="cand-header">
+                        <div class="cand-avatar">JD</div>
+                        <div class="cand-info">
+                            <h3>Jane Doe</h3>
+                            <p>Accounting (Audit)</p>
+                        </div>
+                    </div>
+                    <div class="cand-stats">
+                        <div><strong>Grad:</strong> Dec 2026</div>
+                        <div><strong>GPA:</strong> 3.8</div>
+                        <div><strong>CPA:</strong> 150 Credits</div>
+                    </div>
+                    <div class="cand-tags">
+                        <span class="tag">Excel</span> <span class="tag">Alteryx</span>
+                    </div>
+                    <button class="btn-resume" onclick="alert('This is a mockup feature. In production, this would download the candidate\'s resume PDF.')">View Resume</button>
+                </div>
+
+                <!-- Candidate 2 -->
+                <div class="candidate-card hover-effect">
+                    <div class="cand-header">
+                        <div class="cand-avatar">JD</div>
+                        <div class="cand-info">
+                            <h3>John Doe</h3>
+                            <p>Accounting (Tax)</p>
+                        </div>
+                    </div>
+                    <div class="cand-stats">
+                        <div><strong>Grad:</strong> May 2027</div>
+                        <div><strong>GPA:</strong> 3.9</div>
+                        <div><strong>CPA:</strong> Eligible</div>
+                    </div>
+                    <div class="cand-tags">
+                        <span class="tag">Python</span> <span class="tag">TaxAct</span>
+                    </div>
+                    <button class="btn-resume" onclick="alert('This is a mockup feature.')">View Resume</button>
+                </div>
+
+                <!-- Candidate 3 -->
+                <div class="candidate-card hover-effect" style="border: 2px solid var(--accent-gold);">
+                    <div class="cand-header">
+                        <div class="cand-avatar" style="background: var(--primary-navy);">BW</div>
+                        <div class="cand-info">
+                            <h3>Ben Weber-Sparrow</h3>
+                            <p>Accounting (Audit/Tech)</p>
+                        </div>
+                    </div>
+                    <div class="cand-stats">
+                        <div><strong>Grad:</strong> May 2027</div>
+                        <div><strong>GPA:</strong> &infin;</div>
+                        <div><strong>CPA:</strong> Eventually</div>
+                    </div>
+                    <div class="cand-tags">
+                        <span class="tag">Python</span> <span class="tag">SQL</span> <span class="tag">Web Dev</span>
+                    </div>
+                    <button class="btn-resume" style="background: var(--primary-navy); color: white;" onclick="alert('Hire me! Just kidding, this is a mockup.')">View Resume</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer-cta">
+        <div class="footer-content fade-in">
+            <h2>Let’s Debug the Future Together.</h2>
+            <p>Vote Ben Weber-Sparrow for Director of Technology</p>
+            <button class="interactive-btn" onclick="alert('Thank you for auditing my campaign!')">Endorse Ben</button>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Hamburger Menu Logic
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => { observer.observe(element); });
+    </script>
+</body>
+</html>
