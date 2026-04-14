@@ -36,7 +36,6 @@
             <p class="section-intro">Bridging the gap between financial excellence and technological efficiency.</p>
             
             <div class="cards-grid">
-                <!-- Card 1 -->
                 <div class="pillar-card">
                     <div class="pillar-icon">⏱️</div>
                     <div class="pillar-title">Automated Hour Tracking</div>
@@ -46,7 +45,6 @@
                     <span class="roi-badge">EST. SAVINGS: 12 Hours/Month</span>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="pillar-card">
                     <div class="pillar-icon">💼</div>
                     <div class="pillar-title">The Recruiter Gateway</div>
@@ -56,7 +54,6 @@
                     <span class="roi-badge">GOAL: 20% Increase in Interviews</span>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="pillar-card">
                     <div class="pillar-icon">🔒</div>
                     <div class="pillar-title">Cyber-Audit & Security</div>
@@ -108,8 +105,8 @@
     <!-- SECTION 4: THE ACCOUNTING GAME -->
     <section id="game" class="content-section">
         <div class="container fade-in text-center">
-            <h2 class="section-title">Month-End Close: The Game</h2>
-            <p class="section-intro">Prove you have what it takes to balance the books! Sort the transactions before they hit the floor.<br><strong>Debits (DR) on the Left. Credits (CR) on the Right.</strong></p>
+            <h2 class="section-title">Normal Balances: The Game</h2>
+            <p class="section-intro">Sort the falling accounts to the side that <strong>INCREASES</strong> their balance.<br><strong>DEALER Rule:</strong> Dividends, Expenses, Assets (DR Left) | Liabilities, Equity, Revenue (CR Right)</p>
             
             <div id="game-container">
                 <div id="score-board">Retained Earnings (Score): <span id="score">0</span></div>
@@ -117,9 +114,9 @@
                     <div id="accountant">🧑‍💼</div>
                 </div>
                 <div class="game-controls">
-                    <button id="btn-left" class="game-btn debit-btn">⬅️ DR (Left Arrow)</button>
+                    <button id="btn-left" class="game-btn debit-btn">⬅️ Debit (Left)</button>
                     <button id="btn-start" class="game-btn start-btn">Start Month-End</button>
-                    <button id="btn-right" class="game-btn credit-btn">(Right Arrow) CR ➡️</button>
+                    <button id="btn-right" class="game-btn credit-btn">Credit (Right) ➡️</button>
                 </div>
             </div>
         </div>
@@ -136,7 +133,7 @@
 
     <!-- INTERACTIVE JAVASCRIPT -->
     <script>
-        // Smooth scrolling for navigation links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -146,13 +143,8 @@
             });
         });
 
-        // Intersection Observer for scroll animations (fade-in effect)
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
-
+        // Intersection Observer
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -162,9 +154,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.fade-in').forEach(element => {
-            observer.observe(element);
-        });
+        document.querySelectorAll('.fade-in').forEach(element => { observer.observe(element); });
         
         // --- THE ACCOUNTING GAME LOGIC ---
         let score = 0;
@@ -178,27 +168,44 @@
         const scoreEl = document.getElementById('score');
         const btnStart = document.getElementById('btn-start');
 
+        // Normal Balances Dictionary
+        const accountsList = [
+            // DEBITS (Increase on left)
+            { name: "Cash", type: "debit" },
+            { name: "Accounts Receivable", type: "debit" },
+            { name: "Inventory", type: "debit" },
+            { name: "Equipment", type: "debit" },
+            { name: "Rent Expense", type: "debit" },
+            { name: "COGS", type: "debit" },
+            { name: "Dividends", type: "debit" },
+            // CREDITS (Increase on right)
+            { name: "Accounts Payable", type: "credit" },
+            { name: "Notes Payable", type: "credit" },
+            { name: "Unearned Revenue", type: "credit" },
+            { name: "Common Stock", type: "credit" },
+            { name: "Retained Earnings", type: "credit" },
+            { name: "Sales Revenue", type: "credit" },
+            { name: "Accumulated Depr.", type: "credit" }
+        ];
+
         function startGame() {
             if(isPlaying) return;
             isPlaying = true;
             score = 0;
             speedMultiplier = 1;
             scoreEl.innerText = score;
-            btnStart.innerText = "Closing the Books...";
+            btnStart.innerText = "Reconciling...";
             btnStart.disabled = true;
             
-            // Clear board except for accountant
             gameBoard.innerHTML = '<div id="accountant">🧑‍💼</div>'; 
             items = [];
             
-            spawnInterval = setInterval(spawnItem, 1200);
+            spawnInterval = setInterval(spawnItem, 1400);
             requestAnimationFrame(updateGame);
             
-            // Increase difficulty over time
-            setTimeout(() => { speedMultiplier = 1.5; }, 15000);
-            setTimeout(() => { speedMultiplier = 2.0; }, 30000);
+            setTimeout(() => { speedMultiplier = 1.4; }, 15000);
+            setTimeout(() => { speedMultiplier = 1.8; }, 30000);
             
-            // End game after 45 seconds
             setTimeout(endGame, 45000);
         }
 
@@ -207,38 +214,39 @@
             clearInterval(spawnInterval);
             btnStart.innerText = "Start Next Month";
             btnStart.disabled = false;
-            alert("Month-End Close Complete! Your final Retained Earnings (Score) is: " + score + ". " + (score > 50 ? "Partner material!" : "Back to intermediate accounting with you."));
+            alert("Month-End Close Complete! Your final score is: " + score + ". " + (score > 80 ? "CPA material right here!" : "Let's review those normal balances."));
         }
 
         function spawnItem() {
             if(!isPlaying) return;
-            const isDebit = Math.random() > 0.5;
+            const account = accountsList[Math.floor(Math.random() * accountsList.length)];
             const item = document.createElement('div');
-            item.className = 'falling-item ' + (isDebit ? 'debit-item' : 'credit-item');
-            item.innerText = isDebit ? 'DR' : 'CR';
-            item.dataset.type = isDebit ? 'debit' : 'credit';
+            item.className = 'falling-item';
+            item.innerText = account.name;
+            item.dataset.type = account.type;
             item.style.top = '0px';
             
-            // Random horizontal position, keeping it within bounds
-            const maxLeft = gameBoard.offsetWidth - 50; 
+            gameBoard.appendChild(item);
+            
+            // Random horizontal position (keep within bounds based on text width)
+            const itemWidth = item.offsetWidth || 120;
+            const maxLeft = gameBoard.offsetWidth - itemWidth - 10; 
             item.style.left = Math.floor(Math.random() * maxLeft) + 'px';
             
-            gameBoard.appendChild(item);
             items.push({ el: item, y: 0, x: parseFloat(item.style.left) });
         }
 
         function updateGame() {
             if(!isPlaying) return;
             for(let i=0; i<items.length; i++) {
-                items[i].y += (2.5 * speedMultiplier); // fall speed
+                items[i].y += (2.2 * speedMultiplier); 
                 items[i].el.style.top = items[i].y + 'px';
 
-                // check if hits the floor (missed transaction)
                 if(items[i].y > gameBoard.offsetHeight - 40) {
                     gameBoard.removeChild(items[i].el);
                     items.splice(i, 1);
                     i--;
-                    score = Math.max(0, score - 5); // penalty for unrecorded transaction
+                    score = Math.max(0, score - 5); 
                     scoreEl.innerText = score;
                     flashBoard('red');
                 }
@@ -249,16 +257,14 @@
         function handleInput(type) {
             if(!isPlaying || items.length === 0) return;
             
-            // Find the lowest item on the screen (closest to the floor)
             let lowest = items.reduce((prev, curr) => (prev.y > curr.y) ? prev : curr);
             
-            // Only allow hitting if it's falling (prevent hitting ones that just spawned)
-            if (lowest.y > 30) {
+            if (lowest.y > 20) {
                 if(lowest.el.dataset.type === type) {
-                    score += 10; // correct entry
+                    score += 10; 
                     flashBoard('green');
                 } else {
-                    score = Math.max(0, score - 5); // wrong entry
+                    score = Math.max(0, score - 10); // Harsher penalty for wrong side!
                     flashBoard('red');
                 }
                 scoreEl.innerText = score;
@@ -268,19 +274,17 @@
         }
         
         function flashBoard(color) {
-            gameBoard.style.boxShadow = `inset 0 0 20px ${color}`;
+            gameBoard.style.boxShadow = `inset 0 0 30px ${color}`;
             setTimeout(() => {
                 gameBoard.style.boxShadow = 'inset 0 0 10px rgba(0,0,0,0.5)';
             }, 150);
         }
 
-        // Keyboard controls
         document.addEventListener('keydown', (e) => {
             if(e.key === 'ArrowLeft') handleInput('debit');
             if(e.key === 'ArrowRight') handleInput('credit');
         });
         
-        // Button controls for mobile/mouse
         document.getElementById('btn-left').addEventListener('click', () => handleInput('debit'));
         document.getElementById('btn-right').addEventListener('click', () => handleInput('credit'));
         document.getElementById('btn-start').addEventListener('click', startGame);
